@@ -1,6 +1,6 @@
 class NegociacaoController {
     constructor(){
-        let $ = document.querySelector.bind(document);
+        const $ = document.querySelector.bind(document);
         this._inputData = $('#data');
         this._inputQuantidade = $('#quantidade');
         this._inputValor = $('#valor');
@@ -8,12 +8,18 @@ class NegociacaoController {
         this._negociacoesView = new NegociacoesView('#negociacoes');
 
         this._negociacoesView.update(this._negociacoes);
+        this._mensagem = new Mensagem();
+
+        this._mensagemView = new MensagemView('#mensagemView');
+        this._mensagemView.update(this._mensagem);
     }
     adiciona(event){
 
         event.preventDefault();
         this._negociacoes.adiciona(this._criaNegociacao());
+        this._mensagem.texto = 'Negociacao Criada com Sucesso';
         this._negociacoesView.update(this._negociacoes);
+        this._mensagemView.update(this._mensagem);
         this._limpaFormulario();
     }
     _limpaFormulario(){
