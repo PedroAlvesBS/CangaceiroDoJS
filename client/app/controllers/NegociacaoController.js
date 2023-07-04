@@ -18,11 +18,22 @@ class NegociacaoController {
         );
     }
     adiciona(event){
-        event.preventDefault();
-        this._negociacoes.adiciona(this._criaNegociacao());
-        this._mensagem.texto = 'Negociacao Criada com Sucesso';
+        try {
+            event.preventDefault();
+            this._negociacoes.adiciona(this._criaNegociacao());
+            this._mensagem.texto = 'Negociacao Criada com Sucesso';
 
-        this._limpaFormulario();
+            this._limpaFormulario();
+
+        } catch(err){
+            console.log(err);
+            console.log(err.stack);
+            if(err instanceof DataInvalidaException){
+                this._mensagem.texto = err.message;
+            } else {
+                this._mensagem.texto = 'Um erro inesperado aconteceu. Entre em contato com o suporte.'
+            }
+        }
     }
     _limpaFormulario(){
         this._inputData.value = '';
