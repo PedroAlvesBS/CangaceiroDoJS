@@ -1,1 +1,4 @@
 .DS_Store
+client/package.json
+client/node_modules
+client/app

@@ -1,17 +1,9 @@
-System.register(['./View.js', '../converters/DateConverter.js'], function (_export, _context) {
-    "use strict";
+import { View } from './View.js';
+import { DateConverter } from '../converters/DateConverter.js';
 
-    var View, DateConverter;
-    return {
-        setters: [function (_ViewJs) {
-            View = _ViewJs.View;
-        }, function (_convertersDateConverterJs) {
-            DateConverter = _convertersDateConverterJs.DateConverter;
-        }],
-        execute: function () {
-            class NegociacoesView extends View {
-                template(model) {
-                    return `
+export class NegociacoesView extends View {
+    template(model) {
+        return `
             <table class="table table-hover table-bordered">
                 <thead>
                     <tr>
@@ -23,14 +15,16 @@ System.register(['./View.js', '../converters/DateConverter.js'], function (_expo
                 </thead>
                 
                 <tbody>
-                ${model.paraArray().map(negociacao => `
+                ${model.paraArray().map(negociacao => 
+                `
                     <tr>
                         <td>${DateConverter.paraTexto(negociacao.data)}</td>
                         <td>${negociacao.quantidade}</td>
                         <td>${negociacao.valor}</td>
                         <td>${negociacao.volume}</td>
                     </tr>
-                `).join('')}
+                `
+                ).join('')}
                 </tbody>
                 
                 <tfoot>
@@ -38,12 +32,6 @@ System.register(['./View.js', '../converters/DateConverter.js'], function (_expo
                     <td>${model.volumeTotal}</td>
                 </tfoot>
             </table>
-        `;
-                }
-            }
-
-            _export('NegociacoesView', NegociacoesView);
-        }
-    };
-});
-//# sourceMappingURL=NegociacoesView.js.map
+        `
+    }
+}
