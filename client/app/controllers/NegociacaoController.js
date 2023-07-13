@@ -1,37 +1,7 @@
 System.register(['../domain/index.js', '../ui/index.js', '../util/index.js'], function (_export, _context) {
     "use strict";
 
-    var Negociacoes, NegociacaoService, Negociacao, NegociacoesView, MensagemView, Mensagem, DateConverter, getNegociacoesDao, Bind, getExceptionMessage;
-
-    function _asyncToGenerator(fn) {
-        return function () {
-            var gen = fn.apply(this, arguments);
-            return new Promise(function (resolve, reject) {
-                function step(key, arg) {
-                    try {
-                        var info = gen[key](arg);
-                        var value = info.value;
-                    } catch (error) {
-                        reject(error);
-                        return;
-                    }
-
-                    if (info.done) {
-                        resolve(value);
-                    } else {
-                        return Promise.resolve(value).then(function (value) {
-                            step("next", value);
-                        }, function (err) {
-                            step("throw", err);
-                        });
-                    }
-                }
-
-                return step("next");
-            });
-        };
-    }
-
+    var Negociacoes, NegociacaoService, Negociacao, NegociacoesView, MensagemView, Mensagem, DateConverter, getNegociacoesDao, Bind, getExceptionMessage, debounce, controller, bindEvent;
     return {
         setters: [function (_domainIndexJs) {
             Negociacoes = _domainIndexJs.Negociacoes;
@@ -46,14 +16,75 @@ System.register(['../domain/index.js', '../ui/index.js', '../util/index.js'], fu
             getNegociacoesDao = _utilIndexJs.getNegociacoesDao;
             Bind = _utilIndexJs.Bind;
             getExceptionMessage = _utilIndexJs.getExceptionMessage;
+            debounce = _utilIndexJs.debounce;
+            controller = _utilIndexJs.controller;
+            bindEvent = _utilIndexJs.bindEvent;
         }],
         execute: function () {
-            class NegociacaoController {
-                constructor() {
-                    const $ = document.querySelector.bind(document);
-                    this._inputData = $('#data');
-                    this._inputQuantidade = $('#quantidade');
-                    this._inputValor = $('#valor');
+            function _asyncToGenerator(fn) {
+                return function () {
+                    var gen = fn.apply(this, arguments);
+                    return new Promise(function (resolve, reject) {
+                        function step(key, arg) {
+                            try {
+                                var info = gen[key](arg);
+                                var value = info.value;
+                            } catch (error) {
+                                reject(error);
+                                return;
+                            }
+
+                            if (info.done) {
+                                resolve(value);
+                            } else {
+                                return Promise.resolve(value).then(function (value) {
+                                    step("next", value);
+                                }, function (err) {
+                                    step("throw", err);
+                                });
+                            }
+                        }
+
+                        return step("next");
+                    });
+                };
+            }
+
+            function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) {
+                var desc = {};
+                Object['ke' + 'ys'](descriptor).forEach(function (key) {
+                    desc[key] = descriptor[key];
+                });
+                desc.enumerable = !!desc.enumerable;
+                desc.configurable = !!desc.configurable;
+
+                if ('value' in desc || desc.initializer) {
+                    desc.writable = true;
+                }
+
+                desc = decorators.slice().reverse().reduce(function (desc, decorator) {
+                    return decorator(target, property, desc) || desc;
+                }, desc);
+
+                if (context && desc.initializer !== void 0) {
+                    desc.value = desc.initializer ? desc.initializer.call(context) : void 0;
+                    desc.initializer = undefined;
+                }
+
+                if (desc.initializer === void 0) {
+                    Object['define' + 'Property'](target, property, desc);
+                    desc = null;
+                }
+
+                return desc;
+            }
+
+            var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _class, _desc, _value, _class2;
+
+            let NegociacaoController = (_dec = controller('#data', '#quantidade', '#valor'), _dec2 = bindEvent('submit', '.form'), _dec3 = debounce(), _dec4 = bindEvent('click', '#botao-apaga'), _dec5 = bindEvent('click', '#botao-importa'), _dec6 = debounce(), _dec(_class = (_class2 = class NegociacaoController {
+                constructor(_inputData, _inputQuantidade, _inputValor) {
+
+                    Object.assign(this, { _inputData, _inputQuantidade, _inputValor });
 
                     this._negociacoes = new Bind(new Negociacoes(), new NegociacoesView('#negociacoes'), 'adiciona', 'esvazia');
 
@@ -78,6 +109,7 @@ System.register(['../domain/index.js', '../ui/index.js', '../util/index.js'], fu
                         }
                     })();
                 }
+
                 adiciona(event) {
                     var _this2 = this;
 
@@ -105,6 +137,7 @@ System.register(['../domain/index.js', '../ui/index.js', '../util/index.js'], fu
                 _criaNegociacao() {
                     return new Negociacao(DateConverter.paraData(this._inputData.value), parseInt(this._inputQuantidade.value), parseFloat(this._inputValor.value));
                 }
+
                 apaga() {
                     var _this3 = this;
 
@@ -119,6 +152,7 @@ System.register(['../domain/index.js', '../ui/index.js', '../util/index.js'], fu
                         }
                     })();
                 }
+
                 importaNegociacoes() {
                     var _this4 = this;
 
@@ -141,7 +175,7 @@ System.register(['../domain/index.js', '../ui/index.js', '../util/index.js'], fu
                     })();
                 }
 
-            }
+            }, (_applyDecoratedDescriptor(_class2.prototype, 'adiciona', [_dec2, _dec3], Object.getOwnPropertyDescriptor(_class2.prototype, 'adiciona'), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, 'apaga', [_dec4], Object.getOwnPropertyDescriptor(_class2.prototype, 'apaga'), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, 'importaNegociacoes', [_dec5, _dec6], Object.getOwnPropertyDescriptor(_class2.prototype, 'importaNegociacoes'), _class2.prototype)), _class2)) || _class);
 
             _export('NegociacaoController', NegociacaoController);
         }
