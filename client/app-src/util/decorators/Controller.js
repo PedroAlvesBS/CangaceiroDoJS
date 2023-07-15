@@ -4,13 +4,13 @@ export function controller(...seletores) {
 
     return function(constructor){
 
-        const construtorOriginal = constructor;
+        const constructorOriginal = constructor;
 
-        const construtorNovo = function (){
-            const instance = new construtorOriginal(...elements);
-            Object.getOwnPropertyNames(construtorOriginal.prototype)
+        const constructorNovo = function() {
+            const instance = new constructorOriginal(...elements);
+            Object.getOwnPropertyNames(constructorOriginal.prototype)
                 .forEach(property => {
-                    if(Reflect.hasMetadata('bindEvent', instance, property)){
+                    if (Reflect.hasMetadata('bindEvent', instance, property)) {
                         associaEvento(instance,
                             Reflect.getMetadata('bindEvent', instance, property));
 
@@ -18,9 +18,9 @@ export function controller(...seletores) {
                 });
         }
 
-        construtorNovo.prototype = construtorOriginal.prototype;
+        constructorNovo.prototype = constructorOriginal.prototype;
 
-        return construtorNovo;
+        return constructorNovo;
     }
 }
 

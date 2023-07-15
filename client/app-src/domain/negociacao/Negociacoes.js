@@ -1,13 +1,10 @@
 export class Negociacoes {
     constructor(){
         this._negociacoes = [];
-        Object.freeze(this)
+        Object.freeze(this);
     }
     adiciona(negociacao){
         this._negociacoes.push(negociacao);
-    }
-    esvazia(){
-        this._negociacoes.length = 0;
     }
     paraArray(){
         return [].concat(this._negociacoes);
@@ -17,5 +14,8 @@ export class Negociacoes {
         .reduce((total,negociacao)=>
         total + negociacao.volume, 0);
         
+    }
+    esvazia(){
+        this._negociacoes.length = 0;
     }
 }

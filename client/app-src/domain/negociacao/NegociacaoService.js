@@ -1,14 +1,14 @@
-import { HttpService } from '../../util/HttpService.js';
-import { Negociacao } from './Negociacao.js';
-import { ApplicationException } from '../../util/ApplicationException.js';
+import { HttpService } from '../../util/HttpService';
+import { Negociacao } from './Negociacao';
+import { ApplicationException } from '../../util/ApplicationException';
 
 export class NegociacaoService {
     constructor(){
         this._http = new HttpService();
     }
-    obtemNegociacaoDaSemana() {
+    obtemNegociacoesDaSemana() {
         return this._http
-            .get('negociacoes/semana')
+            .get(`${SERVICE_URL}/negociacoes/semana`)
             .then(
                 dados => 
                     dados.map(objeto =>
@@ -19,9 +19,9 @@ export class NegociacaoService {
                 }
             );  
     }
-    obtemNegociacaoDaSemanaAnterior() {
+    obtemNegociacoesDaSemanaAnterior() {
         return this._http
-            .get('negociacoes/anterior')
+            .get(`${SERVICE_URL}/negociacoes/anterior`)
             .then(
                 dados =>
                     dados.map(objeto =>
@@ -32,9 +32,9 @@ export class NegociacaoService {
                 }
             );  
     }
-    obtemNegociacaoDaSemanaRetrasada() {
+    obtemNegociacoesDaSemanaRetrasada() {
         return this._http
-            .get('negociacoes/retrasada')
+            .get(`${SERVICE_URL}/negociacoes/retrasada`)
             .then(
                 dados => 
                     dados.map(objeto =>
@@ -48,10 +48,10 @@ export class NegociacaoService {
 
     async obtemNegociacoesDoPeriodo(){
         try {
-            const periodo = await Promise.all([
-                this.obtemNegociacaoDaSemana(),
-                this.obtemNegociacaoDaSemanaAnterior(),
-                this.obtemNegociacaoDaSemanaRetrasada()
+            let periodo = await Promise.all([
+                this.obtemNegociacoesDaSemana(),
+                this.obtemNegociacoesDaSemanaAnterior(),
+                this.obtemNegociacoesDaSemanaRetrasada()
             ]);
             return periodo
                 .reduce((novoArray, item) => novoArray.concat(item), [])

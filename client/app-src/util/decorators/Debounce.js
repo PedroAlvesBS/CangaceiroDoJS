@@ -7,7 +7,7 @@ export function debounce(milissegundos = 500) {
             
             if(event) event.preventDefault();
             
-            clearTimeout(timer);
+            clearInterval(timer);
             timer = setTimeout(() => metodoOriginal.apply(this, args), milissegundos);
         }
         return descriptor;

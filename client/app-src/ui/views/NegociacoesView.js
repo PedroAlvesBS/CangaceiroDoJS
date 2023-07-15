@@ -1,5 +1,5 @@
-import { View } from './View.js';
-import { DateConverter } from '../converters/DateConverter.js';
+import { View } from './View';
+import { DateConverter } from '../converters/DateConverter';
 
 export class NegociacoesView extends View {
     template(model) {
@@ -28,8 +28,10 @@ export class NegociacoesView extends View {
                 </tbody>
                 
                 <tfoot>
-                    <td colspan="3"></td>
-                    <td>${model.volumeTotal}</td>
+                    <tr>
+                        <td colspan="3"></td>
+                        <td>${model.volumeTotal}</td>
+                    <tr>
                 </tfoot>
             </table>
         `
